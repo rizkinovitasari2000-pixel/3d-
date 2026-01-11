@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Visualisasi 3D Wilayah Kabupaten Solok</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<base target="_blank">
+
+<link rel="stylesheet" href="./Qgis2threejs.css">
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #000;
+}
+
+/* ===== JUDUL & SUBJUDUL TANPA BACKGROUND ===== */
+#custom-header {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Judul utama */
+#custom-header .title {
+  font-size: 25px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #f0f0f0;
+  text-transform: uppercase;
+}
+
+/* Subjudul terpisah */
+#custom-header .subtitle {
+  margin-top: 6px;
+  font-size: 15px;
+  color: #ffffff;
+  letter-spacing: 0.4px;
+}
+
+/* Viewer */
+#view {
+  position: absolute;
+  inset: 0;
+}
+
+/* Footer minimal */
+#custom-footer {
+  position: fixed;
+  bottom: 6px;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: #000000;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Panel kiri tetap aman */
+#popup, #header, #layerpanel {
+  left: 36px;
+}
+</style>
+
+<script src="./threejs/three.min.js"></script>
+<script src="./threejs/OrbitControls.js"></script>
+<script src="./threejs/ViewHelper.js"></script>
+<script src="./Qgis2threejs.js"></script>
+</head>
+
+<body>
+
+<!-- ===== JUDUL ===== -->
+<div id="custom-header">
+  <div class="title">Visualisasi 3D Wilayah Kabupaten Solok</div>
+  <div class="subtitle">Data yang digunakan: ASTER Global DEM V003 dan Shapefile Sungai dan Danau</div>
+</div>
+
+<!-- ===== VIEW 3D ===== -->
+<div id="view">
+  <div id="northarrow"></div>
+  <div id="navigation"></div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div id="custom-footer">
+  © 2025 · Diolah dengan QGIS· Oleh: Rizki Novita
+</div>
+
+<!-- ===== POPUP ===== -->
+<div id="popup">
+  <div id="closebtn">&times;</div>
+  <div id="popupbar"></div>
+  <div id="popupbody">
+    <div id="popupcontent"></div>
+    <div id="queryresult"></div>
+    <div id="pageinfo"></div>
+  </div>
+</div>
+
+<div id="progress"><div id="progressbar"></div></div>
+
+<div id="toolbtns">
+  <div id="layerbtn"></div>
+  <div id="animbtn" class="hidden"></div>
+  <div id="infobtn"></div>
+</div>
+
+<div id="layerpanel">
+  <div id="layerlist"></div>
+</div>
+
+<script>
+Q3D.Config.allVisible = true;
+
+var container = document.getElementById("view"),
+    app = Q3D.application;
+
+app.init(container);
+
+app.loadSceneFile("./data/index/scene.json", function () {
+  app.start();
+});
+</script>
+
+</body>
+</html>
